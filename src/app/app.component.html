@@ -1,0 +1,40 @@
+<p>
+  google-map works!
+</p>
+
+<div class="col-xs-12">
+    <div>
+        <input type="radio" id="mapType1"
+         name="mapType" value="SHOW" [(ngModel)]="mapType">
+        <label for="mapType1">SHOW</label>
+    
+        <input type="radio" id="mapType2"
+         name="mapType" value="SEARCH" [(ngModel)]="mapType">
+        <label for="mapType2">SEARCH</label>
+      </div>
+</div>
+
+<ng-container *ngIf="'SHOW'===mapType">
+  <p>{{mapType}}</p>
+  <div class="col-xs-12">
+      <angular-google-map 
+      [apiKey]="apiKey"
+        [mapType]="mapType"
+        [center]="mapCenter"
+        [markers]="markers"
+        [zoom]="zoom">
+    </angular-google-map>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="'SEARCH'===mapType">
+  <p>{{mapType}}</p>
+  <div class="col-xs-12">
+    <angular-google-map 
+      [apiKey]="apiKey"
+      [mapType]="mapType"
+      [center]="mapCenter"
+      [zoom]="zoom">
+    </angular-google-map>
+  </div>
+</ng-container>
