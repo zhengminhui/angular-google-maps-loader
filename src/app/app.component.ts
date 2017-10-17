@@ -8,16 +8,17 @@ import { Component } from '@angular/core';
 export class AppComponent {
   mapCenter: object;
   zoom: number;
-  markers: any;
+  markers: object;
   mapType: string;
   apiKey: string;
+  polylinePoints: object[];
 
   constructor() { }
 
   ngOnInit() {
     this.mapCenter = {
-      lat: 22.5688,
-      lng: 113.5688,
+      lat: 37.08,
+      lng: 119.48,
     };
     this.zoom = 8;
     this.markers = [
@@ -31,6 +32,18 @@ export class AppComponent {
       },
     ];
     this.apiKey = 'AIzaSyBXGL9iyEa30kXQEN13oelo31HSaLNpS5g';
+    this.polylinePoints = polylinePoints;
   }
 
 }
+
+const polylinePoints = [
+  { lat: 37.12, lng: 119.49 },
+  { lat: 37.1, lng: 119.5 },
+  { lat: 37.1, lng: 119.48 },
+  { lat: 37.08, lng: 119.48 },
+  { lat: 37.07, lng: 119.47 },
+  { lat: 37.05, lng: 119.47 },
+  { lat: 37.0, lng: 119.47 },
+  { lat: 36.93, lng: 119.42 },
+];

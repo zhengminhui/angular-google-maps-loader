@@ -11,6 +11,10 @@
         <input type="radio" id="mapType2"
          name="mapType" value="SEARCH" [(ngModel)]="mapType">
         <label for="mapType2">SEARCH</label>
+
+        <input type="radio" id="mapType3"
+        name="mapType" value="HISTORY" [(ngModel)]="mapType">
+       <label for="mapType2">HISTORY</label>
       </div>
 </div>
 
@@ -35,6 +39,19 @@
       [mapType]="mapType"
       [center]="mapCenter"
       [zoom]="zoom">
+    </angular-google-map>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="'HISTORY'===mapType">
+  <p>{{mapType}}</p>
+  <div class="col-xs-12">
+    <angular-google-map 
+      [apiKey]="apiKey"
+      [mapType]="mapType"
+      [center]="mapCenter"
+      [zoom]="zoom"
+      [polylinePoints]="polylinePoints">
     </angular-google-map>
   </div>
 </ng-container>

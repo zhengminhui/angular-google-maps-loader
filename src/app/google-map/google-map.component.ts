@@ -12,28 +12,29 @@ declare const google: any;
 @Component({
   selector: 'angular-google-map',
   templateUrl: './google-map.component.html',
-  styleUrls: ['./google-map.component.css']
+  styleUrls: ['./google-map.component.css'],
 })
 export class GoogleMapComponent {
   @Input() apiKey: string;
   @Input() mapType: string;
-  @Input() center: object = {
-    lat: 22.0688,
-    lng: 114.0688,
+  @Input()
+  center: object = {
+    lat: 37.08,
+    lng: 119.48,
   };
   @Input() zoom: number;
   @Input() markers: any;
+  @Input() polylinePoints: any[];
   mapObj: any;
   googleMarkers: object[] = [];
   currWindow: any;
+  currPolyline: any;
 
-  constructor(
-    private _elem: ElementRef,
-  ) { }
+  constructor(private _elem: ElementRef) {}
 
   ngOnInit() {
     const loader = new GoogleMapsLoader(this.apiKey);
-    loader.load().then((res) => {
+    loader.load().then(res => {
       // console.log('ta da');
       // console.log('GoogleMapsLoader.load.then', res);
       this.initMap();
@@ -46,7 +47,7 @@ export class GoogleMapComponent {
       center: this.center,
       zoom: this.zoom,
     };
-    console.log(google, container);
+    // console.log(google, container);
     const map = new google.maps.Map(container, defaultOpts);
     this.mapObj = map;
     if ('SHOW' === this.mapType) {
@@ -65,10 +66,30 @@ export class GoogleMapComponent {
           }
           this.currWindow = infoWindow;
           infoWindow.open(map, marker);
-        })
+        });
       });
+    }
+    if ('HISTORY' === this.mapType) {
+      this.initTrackingMap(map);
     }
   }
 
+  initTrackingMap(map) {
+    console.log(this.polylinePoints);
+    this.currPolyline = new google.maps.Polyline({
+      path: this.polylinePoints,
+      geodesic: true,
+      strokeColor: '#FF0000',
+      strokeOpacity: 1.0,
+      strokeWeight: 2,
+    });
+    this.currPolyline.setMap(map);
+  }
 
+  OnDestroy() {
+    // remove polyline
+    if (this.currPolyline) {
+      this.currPolyline.setMap(null);
+    }
+  }
 }
